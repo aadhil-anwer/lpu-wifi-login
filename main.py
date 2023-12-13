@@ -1,12 +1,16 @@
 import subprocess
 import requests
 import socket
+import time
 import urllib3
 from urllib3.exceptions import InsecureRequestWarning
 
 # Suppress only the InsecureRequestWarning from urllib3 needed for this script. (read about this dumbo.. chatgpt)
 urllib3.disable_warnings(InsecureRequestWarning)
-
+print("Loading Program:", end=" ")
+for _ in range(10):
+    print(".", end="", flush=True)
+    time.sleep(0.5)
 def get_connected_ssid():
     try:
         result = subprocess.check_output(["netsh", "wlan", "show", "interfaces"], universal_newlines=True)
