@@ -51,9 +51,10 @@ def check_ssid_presence(target_ssid):
 
 
 ip = socket.gethostbyname(socket.gethostname())
-
+user=input("Enter Your LPU Registration Number")
+password=input("Enter Internet Password ")
 def loggin_in():
-    payload={'username':'12206717@lpu.com', 'password':'96148351', 'mode':'191', 'ipaddress':ip}
+    payload={'username':f'{user}@lpu.com', 'password':password, 'mode':'191', 'ipaddress':ip}
     r =requests.post('https://10.10.0.1/24online/servlet/E24onlineHTTPClient', verify=False, data=payload)
     r.raise_for_status()  # Raise an error for bad responses (4xx or 5xx)
     
@@ -75,7 +76,7 @@ target_ssid = "LPU"
 
 
 def logging_out():
-    payload={'username':'12206717@lpu.com', 'password':'96148351', 'mode':'193', 'ipaddress':ip, 'logintype':'2', 'loggedinuser':'12206717@lpu.com', 'logout':'Logout'}
+    payload={'username':f'{user}@lpu.com', 'password':password, 'mode':'193', 'ipaddress':ip, 'logintype':'2', 'loggedinuser':'12206717@lpu.com', 'logout':'Logout'}
     r =requests.post('https://10.10.0.1/24online/servlet/E24onlineHTTPClient', verify=False, data=payload)
     r.raise_for_status()  # Raise an error for bad responses (4xx or 5xx)
     res = r.text
