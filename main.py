@@ -2,15 +2,17 @@ import subprocess
 import requests
 import socket
 import time
+import re
 import urllib3
 from urllib3.exceptions import InsecureRequestWarning
 
 # Suppress only the InsecureRequestWarning from urllib3 needed for this script. (read about this dumbo.. chatgpt)
 urllib3.disable_warnings(InsecureRequestWarning)
 print("Loading Program:", end=" ")
-for _ in range(10):
+for _ in range(8):
     print(".", end="", flush=True)
-    time.sleep(0.5)
+    time.sleep(0.1)
+print(" \n")
 def get_connected_ssid():
     try:
         result = subprocess.check_output(["netsh", "wlan", "show", "interfaces"], universal_newlines=True)
@@ -32,12 +34,15 @@ def check_ssid_presence(target_ssid):
         if target_ssid in connected_ssid:
             if "Jio" in connected_ssid:
                 print("Not Official LPU, Its Jionet MF!")
+                return False
                 
             else:
                 print(f"Good! Official LPU Stuff")
+                return True;
                 
         else:
             print(f"Connect to any of the LPU Wireless Network (LPU Wireless, LPU Hostel)")
+            return False
             
     else:
         print(f"\nSomething Terribly wrong with Retrieving Your Connected WIFI.....\n Are yu even connected nigga?\n")
@@ -62,9 +67,12 @@ def loggin_in():
 
 target_ssid = "LPU"  
 
-check_ssid_presence(target_ssid)
-if check_ssid_presence(target_ssid)==true:
-    loggin_in()
+
+# # if check_ssid_presence(target_ssid)==True:
+# #     loggin_in()
+# else:
+#     print("Exiting Program")
+
 
 def logging_out():
     payload={'username':'12206717@lpu.com', 'password':'96148351', 'mode':'193', 'ipaddress':ip, 'logintype':'2', 'loggedinuser':'12206717@lpu.com', 'logout':'Logout'}
@@ -76,9 +84,26 @@ def logging_out():
     else:
         print("Logout failed")
 
+# def connect_to_wifi():
+#     # subprocess.run(['netsh', 'interface', 'set', 'interface', 'Wi-Fi', 'admin=enabled'], shell=True)
+#     available=subprocess.check_output(["netsh", "wlan" ,"show", "network"])
+#     available=available.decode('UTF-8')
+#     # print(available)
+    
+#     pattern=r"SSID \d+ : (.+)"
+#     exclude=["Jio", "Guest"]
+#     wifis=re.finditer(pattern, available)
+#     valid_ssids = [wifi.group(1) for wifi in wifis if all(exclude not in wifi.group(1) for exclude in exclude)]
+#     for ssid in valid_ssids:
+#         if "LPU" in valid_ssids[0]:
+#                 command = ['netsh', 'wlan', 'connect', 'name=' + ssid, 'ssid=' + ssid]
+#                 result = subprocess.check_output(command)
+#                 print(result)
 
 
+    # print(result)
 
+connect_to_wifi()
 # logging_out()
 
 
